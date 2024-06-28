@@ -160,6 +160,8 @@ fn download_tdlib() {
     let tdlib_dir = format!("{}/tdlib", &out_dir);
     let zip_path = format!("{}.zip", &tdlib_dir);
 
+    println!("THE URL IS: {}", url);
+
     // Create the request
     let response = reqwest::blocking::get(&url).unwrap();
 
