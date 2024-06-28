@@ -81,23 +81,26 @@ fn generic_build() {
     let prefix = format!("{}/tdlib", out_dir);
     let include_dir = format!("{}/include", prefix);
     let lib_dir = format!("{}/lib", prefix);
-    let lib_path = {
-        #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
-        {
-            format!("{}/libtdjson.so.{}", lib_dir, TDLIB_VERSION)
-        }
-        #[cfg(any(
-            all(target_os = "macos", target_arch = "x86_64"),
-            all(target_os = "macos", target_arch = "aarch64")
-        ))]
-        {
-            format!("{}/libtdjson.{}.dylib", lib_dir, TDLIB_VERSION)
-        }
-        #[cfg(all(target_os = "windows", target_arch = "x86_64"))]
-        {
-            format!(r"{}\tdjson.lib", lib_dir)
-        }
-    };
+    // let lib_path = {
+    //     #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+    //     {
+    //         format!("{}/libtdjson.so.{}", lib_dir, TDLIB_VERSION)
+    //     }
+    //     #[cfg(any(
+    //         all(target_os = "macos", target_arch = "x86_64"),
+    //         all(target_os = "macos", target_arch = "aarch64")
+    //     ))]
+    //     {
+    //         format!("{}/libtdjson.{}.dylib", lib_dir, TDLIB_VERSION)
+    //     }
+    //     #[cfg(all(target_os = "windows", target_arch = "x86_64"))]
+    //     {
+    //         format!(r"{}\tdjson.lib", lib_dir)
+    //     }
+    // };
+
+    // Temporary fix for linux build
+    let lib_path = format!("{}/libtdjson.so.{}", lib_dir, TDLIB_VERSION);
 
     if !std::path::PathBuf::from(lib_path.clone()).exists() {
         panic!("tdjson shared library not found at {}", lib_path);
